@@ -1,36 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useGetdata } from "../components/useGetdata";
+import { useBlogPost } from "../components/useBlogPost";
 
 function ViewPostPage() {
   const navigate = useNavigate();
 
-  const [posts, setPosts] = useState([]);
-  const [isError, setIsError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
-
-  const getPosts = async () => {
-    try {
-      setIsError(false);
-      setIsLoading(true);
-      const results = await axios("http://localhost:4000/posts");
-      setPosts(results.data.data);
-      setIsLoading(false);
-    } catch (error) {
-      setIsError(true);
-    }
-  };
-
-  useEffect(() => {
-    getPosts();
-  }, []);
+  //ใช้เพื่อดึงข้อมูล post แต่ละอัน
+  const { post, loading } = useGetdata();
+  //ใช้เพื่อดึงข้อมูล post ทุกอันที่ซ้ำซ้อน ระหว่าง homepage และ viewpost
+  const { posts, isError, isLoading } = useBlogPost();
 
   return (
     <div>
       <h1>View Post Page</h1>
       <div className="view-post-container">
-        <h2>Post Title</h2>
-        <p>Content</p>
+        <h2>{`${post.title}`}</h2>
+        <p>{`${post.content}`}</p>
       </div>
 
       <hr />

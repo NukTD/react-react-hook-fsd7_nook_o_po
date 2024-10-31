@@ -4,8 +4,11 @@ import EditPostPage from "./pages/EditPostPage";
 import HomePage from "./pages/HomePage";
 import ViewPostPage from "./pages/ViewPostPage";
 import "./App.css";
+import { useGetdata } from "./components/useGetdata";
 
 function App() {
+  const {data,loading} = useGetdata();
+
   return (
     <div className="App">
       <Router>
